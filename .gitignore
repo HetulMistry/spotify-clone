@@ -35,6 +35,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# supabase password
+password.txt
+
 # folder customizations
 .vscode
 .trunk
