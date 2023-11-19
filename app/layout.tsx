@@ -6,6 +6,8 @@ import SupabaseProvider from "@/providers/SupabaseProvider";
 import UserProvider from "@/providers/UserProvider";
 import ModalProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
+import getSongsByUserId from "@/actions/getSongsByUserId";
+import Player from "@/components/Player";
 
 import "./globals.css";
 
@@ -16,19 +18,30 @@ export const metadata: Metadata = {
   description: "Spotify clone made in next js.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const userSongs = await getSongsByUserId();
+
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="shortcut icon"
+          href="./favicon.ico"
+          type="image/x-icon"
+          sizes="any"
+        />
+      </head>
       <body className={font.className}>
         <ToasterProvider />
         <SupabaseProvider>
           <UserProvider>
             <ModalProvider />
-            <Sidebar>{children}</Sidebar>
+            <Sidebar songs={userSongs}>{children}</Sidebar>
+            <Player />
           </UserProvider>
         </SupabaseProvider>
       </body>
