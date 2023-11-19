@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 
+import getSongsByUserId from "@/actions/getSongsByUserId";
+import getActiveProductsWithPrices from "@/actions/getActiveProductsWithPrices";
 import Sidebar from "@/components/Sidebar";
-import SupabaseProvider from "@/providers/SupabaseProvider";
+import ToasterProvider from "@/providers/ToasterProvider";
 import UserProvider from "@/providers/UserProvider";
 import ModalProvider from "@/providers/ModalProvider";
-import ToasterProvider from "@/providers/ToasterProvider";
-import getSongsByUserId from "@/actions/getSongsByUserId";
+import SupabaseProvider from "@/providers/SupabaseProvider";
 import Player from "@/components/Player";
+
+import "./globals.css";
 
 import "./globals.css";
 
@@ -18,11 +21,14 @@ export const metadata: Metadata = {
   description: "Spotify clone made in next js.",
 };
 
+export const revalidate = 0;
+
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const products = await getActiveProductsWithPrices();
   const userSongs = await getSongsByUserId();
 
   return (
@@ -39,7 +45,7 @@ export default async function RootLayout({
         <ToasterProvider />
         <SupabaseProvider>
           <UserProvider>
-            <ModalProvider />
+            <ModalProvider products={products} />
             <Sidebar songs={userSongs}>{children}</Sidebar>
             <Player />
           </UserProvider>

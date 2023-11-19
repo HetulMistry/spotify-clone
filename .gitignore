@@ -38,6 +38,9 @@ next-env.d.ts
 # supabase password
 password.txt
 
+# stripe cli
+stripe.exe
+
 # folder customizations
 .vscode
 .trunk
