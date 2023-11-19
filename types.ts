@@ -40,7 +40,7 @@ export interface Subscription {
   status?: Stripe.Subscription.Status;
   metaData?: Stripe.Metadata;
   price_id?: string;
-  quantity?: string;
+  quantity?: number;
   cancle_at_period_end?: boolean;
   created?: string;
   current_perios_start: string;
